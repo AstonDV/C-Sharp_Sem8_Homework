@@ -44,7 +44,17 @@ int[,] MultiplicationMatrix(int[,] firstArray, int[,] secondArray)
     int secondMatrRow = secondArray.GetLength(0);
     int secondMatrCol = secondArray.GetLength(1);
     int[,] multiplicationArray = new int[firstMatrRow, secondMatrCol];
-    
+    for (int newRow = 0; newRow < firstMatrRow; newRow++)
+    {
+        for (int newCol = 0; newCol < secondMatrCol; newCol++)
+        {
+            for (int i = 0; i < firstMatrCol; i++)
+            {
+                multiplicationArray[newRow, newCol] += firstArray[newRow, i] * secondArray[i, newCol];
+            }
+        }
+    }
+    return multiplicationArray;
 }
 
 void Main()
@@ -61,9 +71,19 @@ void Main()
     Console.WriteLine();
     int[,] firstMatrix = GetArray(firstRow, firstCol, firstMinVal, firstMaxVal);
     int[,] secondMatrix = GetArray(secondRow, secondCol, secondMinVal, secondMaxVal);
+    Console.WriteLine("Матрица А:");
     PrintArray(firstMatrix);
     Console.WriteLine();
+    Console.WriteLine("Матрица В:");
     PrintArray(secondMatrix);
+    Console.WriteLine();
+    if (firstCol != secondRow) Console.WriteLine("Заданные массивы нельзя перемножить!");
+    else 
+    {
+        int[,] newMatrix = MultiplicationMatrix(firstMatrix, secondMatrix);
+        Console.WriteLine("Произведение матриц А и В:");
+        PrintArray(newMatrix);
+    }
 }
 
 Main();
